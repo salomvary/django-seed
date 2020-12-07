@@ -70,6 +70,10 @@ class ModelSeeder(object):
 
         return func
 
+    @staticmethod
+    def make_choices_formatter(field):
+        return lambda x: random.choice(field.choices)[0]
+
     def guess_field_formatters(self, faker, formatters=None):
         """
         Gets the formatter methods for each field using the guessers
@@ -118,6 +122,10 @@ class ModelSeeder(object):
                 if formatter:
                     formatters[field_name] = formatter
                     continue
+
+            if field.choices:
+                formatters[field_name] = self.make_choices_formatter(field)
+                continue
 
             formatter = field_type_guesser.guess_format(field)
             if formatter:
