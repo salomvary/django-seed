@@ -102,10 +102,6 @@ class ModelSeeder(object):
             if field_name in formatters:
                 continue
 
-            if field.get_default():
-                formatters[field_name] = field.get_default()
-                continue
-
             if isinstance(field, OneToOneField):
                 existing = set()
                 formatters[field_name] = self.build_one_relation(
